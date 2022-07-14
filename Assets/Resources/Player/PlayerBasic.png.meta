@@ -32,6 +32,9 @@ TextureImporter:
   - first:
       213: -4198860087752947176
     second: PlayerBasic_9
+  - first:
+      213: 493747757285297677
+    second: PlayerBasic_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -326,6 +329,27 @@ TextureImporter:
       bones: []
       spriteID: 81a8be72ff6aab5c0800000000000000
       internalID: -4198860087752947176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerBasic_10
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0ec2a128f42ad600800000000000000
+      internalID: 493747757285297677
       vertices: []
       indices: 
       edges: []
