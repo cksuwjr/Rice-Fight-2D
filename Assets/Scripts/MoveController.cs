@@ -53,7 +53,12 @@ public class MoveController : MonoBehaviour
 
         }
     }
-
+    private void OnDrawGizmosSelected()
+    {
+        if (GroundCheck == null)
+            return;
+        Gizmos.DrawWireSphere(GroundCheck.position, GroundCheckRadius);
+    }
     public void Move(float move, bool jump)
     {
         //if (isGround)
