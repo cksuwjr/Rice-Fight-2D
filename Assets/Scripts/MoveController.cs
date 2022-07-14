@@ -68,8 +68,9 @@ public class MoveController : MonoBehaviour
                 Flip();
 
         //}
-        if(isGround && jump)
+        if(jump) /* && isGround   // 지상에 있을때만 점프하고 싶으면추가  */
         {
+            rb.velocity = Vector2.zero; // 연속점프 위해 추가함 가속도초기화
             isGround = false;
             rb.AddForce(new Vector2(0f, JumpForce));
         }
