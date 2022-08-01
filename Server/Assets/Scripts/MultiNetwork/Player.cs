@@ -4,27 +4,28 @@ using UnityEngine;
 using RiptideNetworking;
 public class Player : MonoBehaviour
 {
-    public static Dictionary<ushort, Player> list = new Dictionary<ushort, Player>();
+    public static Dictionary<ushort, Player> list = new Dictionary<ushort, Player>();  //  < id, Player.cs > 담는 자료구조
 
-    public ushort Id { get; private set; }
-    public string Username { get; private set; }
+    public ushort Id { get; private set; } // 고유 ID
+    public string Username { get; private set; } //  유저 이름
 
-    public PlayerMovement playerMove;
+    public PlayerMovement playerMove;   
     private void OnDestroy()
     {
         list.Remove(Id);
     }
-    public static void Spawn(ushort id, string username)
+    public static void Spawn(ushort id, string username) // 소환(id, 이름)
     {
-        foreach(Player otherPlayer in list.Values)
+        foreach(Player otherPlayer in list.Values)      // 현재 모든 플레이어들에게 SendSpawned(id) 호출 (새로운 플레이어 등장!)
             otherPlayer.SendSpawned(id);
 
+        // 실제 서버에 플레이어 생성
         Player player = Instantiate(GameLogic.Singleton.PlayerPrefab, new Vector2(0, 1), Quaternion.identity).GetComponent<Player>();
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
         player.Id = id;
         player.Username = username;
 
-        player.SendSpawned();
+        player.SendSpawned(); // 새로 생성된 플레이어에서 모든 플레이어들에게 SendSpawned()호출
         list.Add(id, player);
     }
 
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
     private static void Input(ushort fromClientId, Message message)
     {
         if (list.TryGetValue(fromClientId, out Player player))
-            player.playerMove.SetInput(message.GetBools(4), message.GetVector2());
+            player.playerMove.SetInput(message.GetBools(4));
     }
     #endregion
 }

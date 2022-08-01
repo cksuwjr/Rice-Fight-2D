@@ -5,7 +5,6 @@ using RiptideNetworking;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Player player;
-    [SerializeField] private Transform camProxy;
     [SerializeField] private MoveController moveController;
     private bool[] inputs;
 
@@ -40,13 +39,11 @@ public class PlayerMovement : MonoBehaviour
         Message message = Message.Create(MessageSendMode.unreliable, ServerToClientId.playerMovement);
         message.AddUShort(player.Id);
         message.AddVector2(transform.position);
-        message.AddVector2(camProxy.position);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
-    public void SetInput(bool[] inputs, Vector2 forward)
+    public void SetInput(bool[] inputs)
     {
         this.inputs = inputs;
-        camProxy.forward = forward;
     }
 
 

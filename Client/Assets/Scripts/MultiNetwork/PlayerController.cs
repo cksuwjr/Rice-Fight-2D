@@ -4,8 +4,6 @@ using UnityEngine;
 using RiptideNetworking;
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Transform camTransform;
-
     private bool[] inputs;
 
     private void Start()
@@ -15,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // 키 뭐눌렀는지 입력받기
         if (Input.GetKey(KeyCode.UpArrow))
             inputs[0] = true;
         if (Input.GetKey(KeyCode.DownArrow))
@@ -28,18 +27,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        SendInput();
+        SendInput(); // 입력받은 키 서버로 전달
 
         for (int i = 0; i < inputs.Length; i++)
             inputs[i] = false;
     }
 
     #region Messages
-    private void SendInput()
+    private void SendInput() // 입력받은 키 서버로 전달
     {
         Message message = Message.Create(MessageSendMode.unreliable, ClientToServerId.input);
         message.AddBools(inputs, false);
-        message.AddVector2(camTransform.forward);
         NetworkManager.Singleton.Client.Send(message);
 
     }
