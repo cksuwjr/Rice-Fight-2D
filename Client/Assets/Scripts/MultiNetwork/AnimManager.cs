@@ -11,12 +11,25 @@ public class AnimManager : MonoBehaviour
 
     public void AnimateBasedOnSpeed()
     {
-        lastPosition.y = transform.position.y;
-        float distanceMoved = Vector2.Distance(transform.position, lastPosition);
+        Vector2 lastXpos = lastPosition;
+        Vector2 lastYpos = lastPosition;
+
+        lastXpos.y = transform.position.y;
+        float distanceMoved = Vector2.Distance(transform.position, lastXpos);
 
         anim.SetBool("isWalk", distanceMoved > 0.01f);
         anim.SetBool("isIdle", !(distanceMoved > 0.01f));
+        
 
+        lastYpos.x = transform.position.x;
+        distanceMoved = Vector2.Distance(transform.position, lastYpos);
+        anim.SetBool("isJump", distanceMoved > 0.01f);
+
+        if (distanceMoved > 0.01f)
+        {
+            int updown = (lastYpos.y - transform.position.y < 0) ? 1 : -1;
+            anim.SetInteger("Jump", updown);
+        }
         lastPosition = transform.position;
     }
 }

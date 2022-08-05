@@ -9,20 +9,18 @@ public class Player : MonoBehaviour
     public bool IsLocal { get; private set; }  //  내 플레이어인가
     private string username;
 
-    [SerializeField] private AnimManager animManager;       // AnimManager.cs
+    [SerializeField] private MoveController moveController;
+    [SerializeField] private AnimManager animManager;
 
     private void OnDestroy()
     {
         list.Remove(Id);    
     }
-    private void Move(Vector2 newPosition)   //  서버로부터 ServerToClientId.playerMovement 받으면 Player.cs 하단의 단에서 해당움직임을 표출한 Player.cs 호출.
-    {
-        transform.position = newPosition;                     // 이동 좌표 받아와서 이동시키기
 
-        if (IsLocal)                                         // 내 Player.cs 면
-        {
-            animManager.AnimateBasedOnSpeed();
-        }
+    private void FixedUpdate()
+    {
+        animManager.AnimateBasedOnSpeed();
+
     }
 
     public static void Spawn(ushort id, string username, Vector2 position)   //  플레이어 소환
@@ -47,15 +45,25 @@ public class Player : MonoBehaviour
 
     }
 
+    public void Move(int direction, bool jump)
+    {
+        if(direction != 0)
+            gameObject.transform.GetChild(0).localScale = new Vector3(-direction, 1, 1);
+        moveController.Move(direction, jump);
+    }
+
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void SpawnPlayer(Message message)
     {
         Spawn(message.GetUShort(), message.GetString(), message.GetVector2());
     }
-    [MessageHandler((ushort)ServerToClientId.playerMovement)]
-    private static void PlayerMovement(Message message)
+
+    [MessageHandler((ushort)ServerToClientId.Move)]
+    private static void AcceptMove(Message message)
     {
-        if (list.TryGetValue(message.GetUShort(), out Player player))
-            player.Move(message.GetVector2());
+        if(list.TryGetValue(NetworkManager.Singleton.Client.Id, out Player player))
+        {
+            player.Move(message.GetInt(), message.GetBool());
+        }
     }
 }

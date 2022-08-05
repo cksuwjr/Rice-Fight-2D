@@ -28,6 +28,15 @@ public class Player : MonoBehaviour
         player.SendSpawned(); // 새로 생성된 플레이어에서 모든 플레이어들에게 SendSpawned()호출
         list.Add(id, player);
     }
+    private void Move(Vector2 newPosition)   //  서버로부터 ServerToClientId.playerMovement 받으면 Player.cs 하단의 단에서 해당움직임을 표출한 Player.cs 호출.
+    {
+        transform.position = newPosition;                     // 이동 좌표 받아와서 이동시키기
+
+        //if (IsLocal)                                         // 내 Player.cs 면
+        //{
+        //    animManager.AnimateBasedOnSpeed();
+        //}
+    }
 
     #region Messages
     private void SendSpawned()
@@ -58,6 +67,12 @@ public class Player : MonoBehaviour
     {
         if (list.TryGetValue(fromClientId, out Player player))
             player.playerMove.SetInput(message.GetBools(4));
+    }
+    [MessageHandler((ushort)ClientToServerId.Position)]
+    private static void AcceptPosition(ushort fromClientId, Message message)
+    {
+        if (list.TryGetValue(fromClientId, out Player player))
+            player.Move(message.GetVector2());
     }
     #endregion
 }

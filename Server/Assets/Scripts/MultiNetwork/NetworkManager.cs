@@ -8,14 +8,14 @@ using RiptideNetworking.Utils;
 public enum ServerToClientId : ushort
 {
     playerSpawned = 1,
-    playerMovement,
+    Move,
 }
 public enum ClientToServerId : ushort
 {
     name = 1,
     input,
+    Position,
 }
-
 
 public class NetworkManager : MonoBehaviour
 {
