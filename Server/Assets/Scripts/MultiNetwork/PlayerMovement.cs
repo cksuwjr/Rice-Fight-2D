@@ -41,10 +41,9 @@ public class PlayerMovement : MonoBehaviour
     private void SendMove(int direction, bool jump)
     {
         Message message = Message.Create(MessageSendMode.unreliable, ServerToClientId.Move);
+        message.AddUShort(player.Id);
         message.AddInt(direction);
         message.AddBool(jump);
-        NetworkManager.Singleton.Server.Send(message, player.Id);
+        NetworkManager.Singleton.Server.SendToAll(message);
     }
-
-
 }

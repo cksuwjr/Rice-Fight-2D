@@ -45,13 +45,21 @@ public class Player : MonoBehaviour
 
     }
 
-    public void Move(int direction, bool jump)
+    public static void Move(ushort id, int direction, bool jump)
     {
-        if(direction != 0)
-            gameObject.transform.GetChild(0).localScale = new Vector3(-direction, 1, 1);
-        moveController.Move(direction, jump);
-    }
+        if (list.TryGetValue(id, out Player player))
+        {
+            if (direction != 0)
+                player.transform.GetChild(0).localScale = new Vector3(-direction, 1, 1);
 
+            if(NetworkManager.Singleton.Client.Id == id)
+                player.moveController.Move(direction, jump);
+        }
+    }
+    public void PositionUpdated(Vector3 position)
+    {
+        transform.position = position;
+    }
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void SpawnPlayer(Message message)
     {
@@ -59,11 +67,19 @@ public class Player : MonoBehaviour
     }
 
     [MessageHandler((ushort)ServerToClientId.Move)]
-    private static void AcceptMove(Message message)
+    private static void SendMoveAccept(Message message)
+    {//NetworkManager.Singleton.Client.Id
+        Move(message.GetUShort(), message.GetInt(), message.GetBool());
+    }
+
+    [MessageHandler((ushort)ServerToClientId.PoseUpdate)]
+    private static void PoseUpdateAccept(Message message)
     {
-        if(list.TryGetValue(NetworkManager.Singleton.Client.Id, out Player player))
+        ushort id = message.GetUShort();
+        if (list.TryGetValue(id, out Player player))
         {
-            player.Move(message.GetInt(), message.GetBool());
+            if(id != NetworkManager.Singleton.Client.Id)
+                player.transform.position = message.GetVector2();
         }
     }
 }

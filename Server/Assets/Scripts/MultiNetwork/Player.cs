@@ -31,11 +31,6 @@ public class Player : MonoBehaviour
     private void Move(Vector2 newPosition)   //  서버로부터 ServerToClientId.playerMovement 받으면 Player.cs 하단의 단에서 해당움직임을 표출한 Player.cs 호출.
     {
         transform.position = newPosition;                     // 이동 좌표 받아와서 이동시키기
-
-        //if (IsLocal)                                         // 내 Player.cs 면
-        //{
-        //    animManager.AnimateBasedOnSpeed();
-        //}
     }
 
     #region Messages
@@ -57,6 +52,16 @@ public class Player : MonoBehaviour
         return message;
     }
 
+    public void PositionUpdate(ushort id, Vector3 newPosition)
+    {
+        transform.position = newPosition;
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.PoseUpdate);
+        message.AddUShort(id);
+        message.AddVector2(transform.position);
+        NetworkManager.Singleton.Server.SendToAll(message);
+    }
+
+
     [MessageHandler((ushort)ClientToServerId.name)]
     private static void Name(ushort fromClientId, Message message)
     {
@@ -68,11 +73,12 @@ public class Player : MonoBehaviour
         if (list.TryGetValue(fromClientId, out Player player))
             player.playerMove.SetInput(message.GetBools(4));
     }
-    [MessageHandler((ushort)ClientToServerId.Position)]
-    private static void AcceptPosition(ushort fromClientId, Message message)
+
+    [MessageHandler((ushort)ClientToServerId.MyPose)]
+    private static void Pose(ushort fromClientId, Message message)
     {
         if (list.TryGetValue(fromClientId, out Player player))
-            player.Move(message.GetVector2());
+            player.PositionUpdate(fromClientId, message.GetVector2());
     }
     #endregion
 }
