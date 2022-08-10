@@ -10,12 +10,14 @@ public enum ServerToClientId : ushort
     playerSpawned = 1,
     Move,
     PoseUpdate,
+    AnimUpdate,
 }
 public enum ClientToServerId : ushort
 {
     name = 1,
     input,
     MyPose,
+    MyAnim,
 }
 
 public class NetworkManager : MonoBehaviour

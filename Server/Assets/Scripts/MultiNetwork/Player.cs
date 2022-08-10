@@ -60,7 +60,13 @@ public class Player : MonoBehaviour
         message.AddVector2(transform.position);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
-
+    public void AnimationUpdate(ushort id, bool[] newAnimation)
+    {
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.AnimUpdate);
+        message.AddUShort(id);
+        message.AddBools(newAnimation, false);
+        NetworkManager.Singleton.Server.SendToAll(message);
+    }
 
     [MessageHandler((ushort)ClientToServerId.name)]
     private static void Name(ushort fromClientId, Message message)
@@ -79,6 +85,13 @@ public class Player : MonoBehaviour
     {
         if (list.TryGetValue(fromClientId, out Player player))
             player.PositionUpdate(fromClientId, message.GetVector2());
+    }
+
+    [MessageHandler((ushort)ClientToServerId.MyAnim)]
+    private static void Anim(ushort fromClientId, Message message)
+    {
+        if (list.TryGetValue(fromClientId, out Player player))
+            player.AnimationUpdate(fromClientId, message.GetBools(3));
     }
     #endregion
 }

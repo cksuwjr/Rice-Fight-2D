@@ -12,14 +12,17 @@ public class Player : MonoBehaviour
     [SerializeField] private MoveController moveController;
     [SerializeField] private AnimManager animManager;
 
+    Rigidbody2D rb;
     private void OnDestroy()
     {
         list.Remove(Id);    
     }
-
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
     private void FixedUpdate()
     {
-        animManager.AnimateBasedOnSpeed();
 
     }
 
@@ -42,7 +45,6 @@ public class Player : MonoBehaviour
         player.username = username;
 
         list.Add(id, player);
-
     }
 
     public static void Move(ushort id, int direction, bool jump)
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour
         if (list.TryGetValue(id, out Player player))
         {
             if (direction != 0)
-                player.transform.GetChild(0).localScale = new Vector3(-direction, 1, 1);
+                player.transform.GetChild(1).localScale = new Vector3(-direction, 1, 1);
 
             if(NetworkManager.Singleton.Client.Id == id)
                 player.moveController.Move(direction, jump);
@@ -58,7 +60,10 @@ public class Player : MonoBehaviour
     }
     public void PositionUpdated(Vector3 position)
     {
-        transform.position = position;
+        rb.MovePosition(position); 
+        // 1.  transform.position = position;     오브젝트 위치 즉시 순간이동,  모든 콜리더가 리지드바디 위치 재계산, 성능저하
+        // 2.  rb.position = position;            다음 물리 시뮬레이션 이후 오브젝트 위치 순간이동, 10배 정도 tranfrom보다 빠름
+        // 3.  rb.MovePosition(position);         자연스러운 움직임
     }
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void SpawnPlayer(Message message)
@@ -80,6 +85,22 @@ public class Player : MonoBehaviour
         {
             if(id != NetworkManager.Singleton.Client.Id)
                 player.transform.position = message.GetVector2();
+        }
+    }
+    [MessageHandler((ushort)ServerToClientId.AnimUpdate)]
+    private static void AnimUpdateAccept(Message message)
+    {
+        ushort id = message.GetUShort();
+        bool[] animParameter = message.GetBools(3);
+        if (list.TryGetValue(id, out Player player))
+        {
+            if (id != NetworkManager.Singleton.Client.Id)
+            {
+                player.animManager.AnimSet("isIdle", animParameter[0]);
+                player.animManager.AnimSet("isWalk", animParameter[1]);
+                player.animManager.AnimSet("isJump", animParameter[2]);
+            }
+                
         }
     }
 }

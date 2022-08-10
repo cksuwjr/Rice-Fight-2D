@@ -1,35 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using RiptideNetworking;
 public class AnimManager : MonoBehaviour
 {
     [SerializeField] private Animator anim;
-    [SerializeField] private float playerMoveSpeed;
-
-    private Vector2 lastPosition;
-
-    public void AnimateBasedOnSpeed()
+    bool[] AnimationParameter = new bool[3];
+    private void Start()
     {
-        Vector2 lastXpos = lastPosition;
-        Vector2 lastYpos = lastPosition;
-
-        lastXpos.y = transform.position.y;
-        float distanceMoved = Vector2.Distance(transform.position, lastXpos);
-
-        anim.SetBool("isWalk", distanceMoved > 0.01f);
-        anim.SetBool("isIdle", !(distanceMoved > 0.01f));
-        
-
-        lastYpos.x = transform.position.x;
-        distanceMoved = Vector2.Distance(transform.position, lastYpos);
-        anim.SetBool("isJump", distanceMoved > 0.01f);
-
-        if (distanceMoved > 0.01f)
+        for(int i = 0; i < AnimationParameter.Length; i++)
         {
-            int updown = (lastYpos.y - transform.position.y < 0) ? 1 : -1;
-            anim.SetInteger("Jump", updown);
+            AnimationParameter[i] = false;
         }
-        lastPosition = transform.position;
+    }
+    public void AnimSet(string name, bool TF)
+    {
+        anim.SetBool(name, TF);
+        if (name == "isIdle")
+            AnimationParameter[0] = TF;
+        if (name == "isWalk")
+            AnimationParameter[1] = TF;
+        if (name == "isJump")
+            AnimationParameter[2] = TF;
+    }
+    public void SendAnim()
+    {
+        Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.MyAnim);
+        message.AddBools(AnimationParameter, false);
+        NetworkManager.Singleton.Client.Send(message);
     }
 }

@@ -10,12 +10,14 @@ public enum ServerToClientId : ushort
     playerSpawned = 1,
     Move,
     PoseUpdate,
+    AnimUpdate,
 }
 public enum ClientToServerId : ushort
 {
     name = 1,
     input,
     MyPose,
+    MyAnim,
 }
 
 public class NetworkManager : MonoBehaviour
@@ -66,9 +68,13 @@ public class NetworkManager : MonoBehaviour
     {
         Client.Disconnect();
     }
-    public void Connect()
+    public void Connect(string ip, string port)
     {
-        Client.Connect($"{ip}:{port}");
+        if(ip != "")
+            this.ip = ip.ToString();
+        if(port != "")
+            this.port = ushort.Parse(port);
+        Client.Connect($"{this.ip}:{this.port}");
     }
 
     private void DidConnect(object sender, EventArgs e)
