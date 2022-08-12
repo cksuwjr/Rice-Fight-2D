@@ -11,6 +11,9 @@ public enum ServerToClientId : ushort
     Move,
     PoseUpdate,
     AnimUpdate,
+    SkillReady,
+    SkillStart,
+    playerUIUpdate,
 }
 public enum ClientToServerId : ushort
 {
@@ -18,6 +21,8 @@ public enum ClientToServerId : ushort
     input,
     MyPose,
     MyAnim,
+    GetDamage,
+    Skill,
 }
 
 public class NetworkManager : MonoBehaviour

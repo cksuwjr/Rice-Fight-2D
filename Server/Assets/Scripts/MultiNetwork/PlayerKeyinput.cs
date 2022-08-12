@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RiptideNetworking;
-public class PlayerMovement : MonoBehaviour
+public class PlayerKeyinput : MonoBehaviour
 {
     [SerializeField] private Player player;
     private bool[] inputs;
 
     int direction = 1;
+    int finaldirection = 1;
     private void OnValidate()
     {
         if (player == null)
@@ -16,11 +17,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        inputs = new bool[4];
+        inputs = new bool[8];
     }
 
     private void FixedUpdate()
     {
+        /// ============= 움직임 ==============
         // if(inputs[0]) 상(점프)
         // if(inputs[1]) 하(없음)
         direction = 0;
@@ -31,13 +33,24 @@ public class PlayerMovement : MonoBehaviour
             direction += 1;
 
         SendMove(direction, inputs[0]);
+        /// ==================================
+        if (direction != 0)
+            finaldirection = direction;
+
+        if (inputs[4])
+            SendSkillReady("Q");
+        if (inputs[5])
+            SendSkillReady("W");
+        if (inputs[6])
+            SendSkillReady("E");
+        if (inputs[7])
+            SendSkillReady("R");
     }
     
     public void SetInput(bool[] inputs)
     {
         this.inputs = inputs;
     }
-
     private void SendMove(int direction, bool jump)
     {
         Message message = Message.Create(MessageSendMode.unreliable, ServerToClientId.Move);
@@ -46,4 +59,13 @@ public class PlayerMovement : MonoBehaviour
         message.AddBool(jump);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
+    private void SendSkillReady(string Key)
+    {
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.SkillReady);
+        message.AddInt(finaldirection);
+        message.AddString(Key);
+        NetworkManager.Singleton.Server.Send(message, player.Id);
+    }
+
+    
 }

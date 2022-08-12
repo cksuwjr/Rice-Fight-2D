@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 908884652715003305}
   - component: {fileID: 7371273182363306500}
   - component: {fileID: 8001647067293650735}
+  - component: {fileID: 15151029526056741}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -107,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e125fc14236e70040a3254ed08851d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMove: {fileID: 8001647067293650735}
+  playerkeyinput: {fileID: 8001647067293650735}
+  status: {fileID: 15151029526056741}
 --- !u!114 &8001647067293650735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +123,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 7371273182363306500}
+--- !u!114 &15151029526056741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359824080443048058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b364c98eaff6a458835c3daa6907a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 500
+  currentHP: 500
+  AttackPower: 50
 --- !u!1 &9067852539187653953
 GameObject:
   m_ObjectHideFlags: 0

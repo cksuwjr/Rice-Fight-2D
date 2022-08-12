@@ -5,28 +5,31 @@ using RiptideNetworking;
 public class AnimManager : MonoBehaviour
 {
     [SerializeField] private Animator anim;
-    bool[] AnimationParameter = new bool[3];
+    bool[] AnimationMoveParameter = new bool[3];
     private void Start()
     {
-        for(int i = 0; i < AnimationParameter.Length; i++)
+        for(int i = 0; i < AnimationMoveParameter.Length; i++)
         {
-            AnimationParameter[i] = false;
+            AnimationMoveParameter[i] = false;
         }
     }
-    public void AnimSet(string name, bool TF)
+    public void AnimSetMove(bool isidle, bool iswalk, bool isjump)
     {
-        anim.SetBool(name, TF);
-        if (name == "isIdle")
-            AnimationParameter[0] = TF;
-        if (name == "isWalk")
-            AnimationParameter[1] = TF;
-        if (name == "isJump")
-            AnimationParameter[2] = TF;
+        anim.SetBool("isIdle", isidle);
+        AnimationMoveParameter[0] = isidle;
+        anim.SetBool("isWalk", iswalk);
+        AnimationMoveParameter[1] = iswalk;
+        anim.SetBool("isJump", isjump);
+        AnimationMoveParameter[2] = isjump;
     }
-    public void SendAnim()
+    public void SendMoveAnim()
     {
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.MyAnim);
-        message.AddBools(AnimationParameter, false);
+        message.AddBools(AnimationMoveParameter, false);
         NetworkManager.Singleton.Client.Send(message);
+    }
+    public void SendAttackAnim(string key)
+    {
+        anim.SetTrigger(key);
     }
 }

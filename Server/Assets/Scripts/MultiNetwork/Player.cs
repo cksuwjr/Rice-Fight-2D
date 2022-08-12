@@ -9,7 +9,10 @@ public class Player : MonoBehaviour
     public ushort Id { get; private set; } // 고유 ID
     public string Username { get; private set; } //  유저 이름
 
-    public PlayerMovement playerMove;   
+    public PlayerKeyinput playerkeyinput;
+
+    [SerializeField] private Status status;
+
     private void OnDestroy()
     {
         list.Remove(Id);
@@ -33,6 +36,15 @@ public class Player : MonoBehaviour
         transform.position = newPosition;                     // 이동 좌표 받아와서 이동시키기
     }
 
+    public void GetHurt(float damage)
+    {
+        status.currentHP -= damage;
+        SendUIUpdate();
+    }
+
+
+
+
     #region Messages
     private void SendSpawned()
     {
@@ -52,19 +64,13 @@ public class Player : MonoBehaviour
         return message;
     }
 
-    public void PositionUpdate(ushort id, Vector3 newPosition)
+    private void SendUIUpdate()
     {
-        transform.position = newPosition;
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.PoseUpdate);
-        message.AddUShort(id);
-        message.AddVector2(transform.position);
-        NetworkManager.Singleton.Server.SendToAll(message);
-    }
-    public void AnimationUpdate(ushort id, bool[] newAnimation)
-    {
-        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.AnimUpdate);
-        message.AddUShort(id);
-        message.AddBools(newAnimation, false);
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.playerUIUpdate);
+        message.AddUShort(Id);
+        message.AddFloat(status.MaxHP);
+        message.AddFloat (status.currentHP);
+        message.AddFloat(status.AttackPower);
         NetworkManager.Singleton.Server.SendToAll(message);
     }
 
@@ -77,7 +83,7 @@ public class Player : MonoBehaviour
     private static void Input(ushort fromClientId, Message message)
     {
         if (list.TryGetValue(fromClientId, out Player player))
-            player.playerMove.SetInput(message.GetBools(4));
+            player.playerkeyinput.SetInput(message.GetBools(8));
     }
 
     [MessageHandler((ushort)ClientToServerId.MyPose)]
@@ -86,12 +92,57 @@ public class Player : MonoBehaviour
         if (list.TryGetValue(fromClientId, out Player player))
             player.PositionUpdate(fromClientId, message.GetVector2());
     }
+    public void PositionUpdate(ushort id, Vector3 newPosition)
+    {
+        transform.position = newPosition;
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.PoseUpdate);
+        message.AddUShort(id);
+        message.AddVector2(transform.position);
+        NetworkManager.Singleton.Server.SendToAll(message);
+    }
 
     [MessageHandler((ushort)ClientToServerId.MyAnim)]
     private static void Anim(ushort fromClientId, Message message)
     {
         if (list.TryGetValue(fromClientId, out Player player))
             player.AnimationUpdate(fromClientId, message.GetBools(3));
+    }
+    public void AnimationUpdate(ushort id, bool[] newAnimation)
+    {
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.AnimUpdate);
+        message.AddUShort(id);
+        message.AddBools(newAnimation, false);
+        NetworkManager.Singleton.Server.SendToAll(message);
+    }
+    
+    [MessageHandler((ushort)ClientToServerId.GetDamage)]
+    private static void GethurtAccept(ushort fromClientId, Message message)
+    {
+        if(list.TryGetValue(message.GetUShort(), out Player player))
+        {
+            Debug.Log("나 다쳤어요" + player.Id);
+            
+            player.GetHurt(message.GetFloat());
+        }
+    }
+
+    [MessageHandler((ushort)ClientToServerId.Skill)]
+    private static void SkillAccept(ushort fromClientId, Message message)
+    {
+        ushort id = message.GetUShort();
+        if (list.TryGetValue(id, out Player player))
+        {
+            player.SkillStart(id, message.GetInt(), message.GetString());
+        }
+    }
+
+    public void SkillStart(ushort id, int direction, string key)
+    {
+        Message message = Message.Create(MessageSendMode.reliable, ServerToClientId.SkillStart);
+        message.AddUShort(id);
+        message.AddInt(direction);
+        message.AddString(key);
+        NetworkManager.Singleton.Server.SendToAll(message);
     }
     #endregion
 }

@@ -4,6 +4,15 @@ using UnityEngine;
 using RiptideNetworking;
 public class MoveController : MonoBehaviour
 {
+    public enum State
+    {
+        Nothing,
+        Charging,
+
+    }
+
+    public State state = State.Nothing;
+
     Rigidbody2D rb;
     Vector2 velocity;
 
@@ -25,12 +34,13 @@ public class MoveController : MonoBehaviour
     
     public void Move(int direction, bool jump)
     {
-        if (player.IsLocal)
+        if (player.IsLocal && state != State.Nothing)
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        if (player.IsLocal && state == State.Nothing)
         {
             Vector2 targetVelocity = new Vector2(direction * MoveSpeed, rb.velocity.y);
             rb.velocity = Vector2.SmoothDamp(rb.velocity, targetVelocity, ref velocity, Smooth);
 
-            bool[] AnimParameter = new bool[3];
             bool isIdle;
             bool isWalk;
             bool isJump;
@@ -58,20 +68,10 @@ public class MoveController : MonoBehaviour
                 rb.AddForce(new Vector2(0, JumpForce), ForceMode2D.Impulse);
             }
 
-            AnimParameter[0] = isIdle;
-            AnimParameter[1] = isWalk;
-            AnimParameter[2] = isJump;
-            AnimSetting(AnimParameter);
+            animManager.AnimSetMove(isIdle,isWalk,isJump);  // 내 애니메이션 업데이트
+            animManager.SendMoveAnim();                     // 내 애니메이션 다른놈들에게 전송
         }
     }
-    private void AnimSetting(bool[] AnimParameter)
-    {
-        animManager.AnimSet("isIdle", AnimParameter[0]);
-        animManager.AnimSet("isWalk", AnimParameter[1]);
-        animManager.AnimSet("isJump", AnimParameter[2]);
-        animManager.SendAnim();
-    }
-    
     private void Update()
     {
         if(player.IsLocal)

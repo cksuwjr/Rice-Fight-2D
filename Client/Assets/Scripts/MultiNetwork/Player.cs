@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private MoveController moveController;
     [SerializeField] private AnimManager animManager;
+    [SerializeField] private PlayerSkill playerSkill;
+    [SerializeField] private PlayerUIManager playerUIManager;
 
     Rigidbody2D rb;
     private void OnDestroy()
@@ -21,10 +23,37 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    private void FixedUpdate()
+    
+    public void Gethurt(float damage)
     {
-
+        Debug.Log(Id + "데미지" + damage + "달음");
+        Message message = Message.Create(MessageSendMode.unreliable, ClientToServerId.GetDamage);
+        message.AddUShort(Id);
+        message.AddFloat(damage);
+        NetworkManager.Singleton.Client.Send(message);
     }
+
+    public void SetState(string state)
+    {
+        switch (state) {
+            case "Nothing":
+                moveController.state = MoveController.State.Nothing;
+                break;
+            case "Charging":
+                moveController.state = MoveController.State.Charging;
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     public static void Spawn(ushort id, string username, Vector2 position)   //  플레이어 소환
     {
@@ -44,6 +73,7 @@ public class Player : MonoBehaviour
         player.Id = id;
         player.username = username;
 
+        player.playerUIManager.SetNickname($" {(string.IsNullOrEmpty(username) ? $"Player {id} (Guest)" : username)}");
         list.Add(id, player);
     }
 
@@ -87,7 +117,7 @@ public class Player : MonoBehaviour
                 player.transform.position = message.GetVector2();
         }
     }
-    [MessageHandler((ushort)ServerToClientId.AnimUpdate)]
+    [MessageHandler((ushort)ServerToClientId.AnimUpdate)] // 나를 제외한 다른놈들의 애니메이션 업데이트
     private static void AnimUpdateAccept(Message message)
     {
         ushort id = message.GetUShort();
@@ -96,11 +126,35 @@ public class Player : MonoBehaviour
         {
             if (id != NetworkManager.Singleton.Client.Id)
             {
-                player.animManager.AnimSet("isIdle", animParameter[0]);
-                player.animManager.AnimSet("isWalk", animParameter[1]);
-                player.animManager.AnimSet("isJump", animParameter[2]);
+                player.animManager.AnimSetMove(animParameter[0], animParameter[1], animParameter[2]);
             }
                 
         }
     }
+
+    [MessageHandler((ushort)ServerToClientId.SkillReady)]
+    private static void SkillAccept(Message message) // 반드시 메시지 전달순서대로 Get-- 할것, 아니면 오류남
+    {
+        if (list.TryGetValue(NetworkManager.Singleton.Client.Id, out Player player))
+        {
+            player.playerSkill.SkillReady(message.GetInt(), message.GetString());
+        }
+    }
+    [MessageHandler((ushort)ServerToClientId.SkillStart)]
+    private static void playerSkillStartAccept(Message message)
+    {
+        if (list.TryGetValue(message.GetUShort(), out Player player))
+        {
+            player.playerSkill.Skill(message.GetInt(), message.GetString());
+        }
+    }
+    [MessageHandler((ushort)ServerToClientId.playerUIUpdate)]
+    private static void playerUIUpdateAccept(Message message)
+    {
+        if (list.TryGetValue(message.GetUShort(), out Player player))
+        {
+            player.playerUIManager.UIUpdate(message.GetFloat(), message.GetFloat(), message.GetFloat());
+        }
+    }
+
 }

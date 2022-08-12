@@ -314,18 +314,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.1749556, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 02f4b9a063c582949b490915e2bb7153, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -448,10 +448,13 @@ GameObject:
   - component: {fileID: -2223680360389814724}
   - component: {fileID: 2938458817866100843}
   - component: {fileID: 7642632047027764972}
+  - component: {fileID: 6473934202970968721}
+  - component: {fileID: 8793442314130742191}
   - component: {fileID: 6031009306601114491}
+  - component: {fileID: 2652814690447803729}
   m_Layer: 0
   m_Name: LocalPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -488,6 +491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveController: {fileID: 7642632047027764972}
   animManager: {fileID: 2938458817866100843}
+  playerSkill: {fileID: 8793442314130742191}
+  playerUIManager: {fileID: 6473934202970968721}
 --- !u!114 &-2223680360389814724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061e60ae82286874cb45fd2da5b344c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   Smooth: 0.05
   JumpForce: 10
   MoveSpeed: 10
@@ -534,6 +540,47 @@ MonoBehaviour:
   MyGround:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &6473934202970968721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615302597602740842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de815de542c91b47919ac10782fa85d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6768072717642975016}
+  Nickname: {fileID: 6926589238296122800}
+  HPbar: {fileID: 7341012803369432685}
+--- !u!114 &8793442314130742191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615302597602740842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff87cdfc53ff05e47a3509cb70ac3001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6768072717642975016}
+  animManager: {fileID: 2938458817866100843}
+  Projectile_Q: {fileID: 3457567047189637719, guid: 2a3a87293979eb04a8af075d4131b3ad, type: 3}
+  Projectile_W: {fileID: 0}
+  Projectile_E: {fileID: 0}
+  Projectile_R: {fileID: 0}
+  Qooltime_Q: 3
+  Qooltime_W: 10
+  Qooltime_E: 10
+  Qooltime_R: 10
+  isUsable_Q: 1
+  isUsable_W: 1
+  isUsable_E: 1
+  isUsable_R: 1
 --- !u!50 &6031009306601114491
 Rigidbody2D:
   serializedVersion: 4
@@ -555,6 +602,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &2652814690447803729
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615302597602740842}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0036315322, y: 0.07626188}
+  m_Size: {x: 0.6815759, y: 0.84747624}
+  m_Direction: 0
 --- !u!1 &8337044181300727381
 GameObject:
   m_ObjectHideFlags: 0
