@@ -12,6 +12,7 @@ public class ShortSword : MonoBehaviour
     public void Setting(Player player, int direction)
     {
         this.player = player;
+        transform.localScale = new Vector3(-direction * 0.8f, 0.8f, 1);
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(Speed * direction, 0);
     }
     void Start()

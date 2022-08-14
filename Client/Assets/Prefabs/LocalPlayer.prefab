@@ -143,7 +143,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1974483700872494357}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: ce7fbdbbcb91eff41af57f558b9a6f3f, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -532,7 +532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   Smooth: 0.05
-  JumpForce: 10
+  JumpForce: 12
   MoveSpeed: 10
   player: {fileID: 6768072717642975016}
   animManager: {fileID: 2938458817866100843}
@@ -573,7 +573,7 @@ MonoBehaviour:
   Projectile_W: {fileID: 0}
   Projectile_E: {fileID: 0}
   Projectile_R: {fileID: 0}
-  Qooltime_Q: 3
+  Qooltime_Q: 1
   Qooltime_W: 10
   Qooltime_E: 10
   Qooltime_R: 10

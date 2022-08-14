@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     {
         if (list.TryGetValue(id, out Player player))
         {
-            if (direction != 0)
+            if (direction != 0 && player.moveController.state == MoveController.State.Nothing)
                 player.transform.GetChild(1).localScale = new Vector3(-direction, 1, 1);
 
             if(NetworkManager.Singleton.Client.Id == id)
