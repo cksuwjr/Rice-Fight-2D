@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6664739651790939613}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7282525732245073233}
   - component: {fileID: 1995001851397434950}
   - component: {fileID: 6821834747081831442}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -4754952122048455827, guid: a14cd60726e090f4598fe1a08522f855, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.3597381, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -159,7 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3278765586649503096}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: camProxy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 947439717500457195}
   - component: {fileID: 3538317329957924726}
   - component: {fileID: 4619600899313135402}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Blackspace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 5884799283997973011}
   - component: {fileID: 4942283033996432693}
   - component: {fileID: 7341012803369432685}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1314941618118981690}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5432292272545138255}
   - component: {fileID: 1529019310576205057}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -569,13 +569,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6768072717642975016}
   animManager: {fileID: 2938458817866100843}
+  moveController: {fileID: 7642632047027764972}
   Projectile_Q: {fileID: 3457567047189637719, guid: 2a3a87293979eb04a8af075d4131b3ad, type: 3}
   Projectile_W: {fileID: 0}
   Projectile_E: {fileID: 0}
   Projectile_R: {fileID: 0}
   Qooltime_Q: 1
   Qooltime_W: 10
-  Qooltime_E: 10
+  Qooltime_E: 1
   Qooltime_R: 10
   isUsable_Q: 1
   isUsable_W: 1
@@ -600,7 +601,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &2652814690447803729
 CapsuleCollider2D:
@@ -630,7 +631,7 @@ GameObject:
   - component: {fileID: 1381765216068712562}
   - component: {fileID: 2675524786260138967}
   - component: {fileID: 7187446826645738339}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: PlayerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -732,7 +733,7 @@ GameObject:
   - component: {fileID: 4021689982947511555}
   - component: {fileID: 6926589238296122800}
   - component: {fileID: 8407429494997786529}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Nickname
   m_TagString: Untagged
   m_Icon: {fileID: 0}

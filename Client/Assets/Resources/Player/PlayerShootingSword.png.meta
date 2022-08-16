@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: -606454073452915103
     second: PlayerShootingSword_4
+  - first:
+      213: 1868872072536918745
+    second: PlayerShootingSword_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -206,6 +209,27 @@ TextureImporter:
       bones: []
       spriteID: 166104bbb317597f0800000000000000
       internalID: -606454073452915103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerShootingSword_5
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9da063e8f319fe910800000000000000
+      internalID: 1868872072536918745
       vertices: []
       indices: 
       edges: []

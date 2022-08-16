@@ -34,7 +34,7 @@ public class MoveController : MonoBehaviour
     
     public void Move(int direction, bool jump)
     {
-        if (player.IsLocal && state != State.Nothing)
+        if (player.IsLocal && state == State.Charging)
             rb.velocity = new Vector2(0, rb.velocity.y);
         if (player.IsLocal && state == State.Nothing)
         {
@@ -72,6 +72,8 @@ public class MoveController : MonoBehaviour
             animManager.SendMoveAnim();                     // 내 애니메이션 다른놈들에게 전송
         }
     }
+
+
     private void Update()
     {
         if(player.IsLocal)

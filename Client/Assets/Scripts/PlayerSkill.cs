@@ -13,6 +13,7 @@ public class PlayerSkill : MonoBehaviour
 
     [SerializeField] Player player;
     [SerializeField] AnimManager animManager;
+    [SerializeField] MoveController moveController;
 
     [SerializeField] GameObject Projectile_Q;
     [SerializeField] GameObject Projectile_W;
@@ -29,6 +30,7 @@ public class PlayerSkill : MonoBehaviour
     [SerializeField] bool isUsable_E = true;
     [SerializeField] bool isUsable_R = true;
 
+    bool E_damageOnOff = false;
     public void SkillReady(int direction, string key)
     {
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.Skill);
@@ -45,10 +47,28 @@ public class PlayerSkill : MonoBehaviour
                 }
                 break;
             case "W":
+                if (isUsable_W && player.IsLocal)
+                {
+                    StartCoroutine(CooltimeReturner("W", Qooltime_W));      // 쿨타임 대기 시작
+                    StartCoroutine(CooltimeReturner("State", 0.3f));        // 정신집중(차징, 멈칫)
+                    NetworkManager.Singleton.Client.Send(message); // qwer일때만 보내자
+                }
                 break;
             case "E":
+                if (isUsable_E && player.IsLocal)
+                {
+                    StartCoroutine(CooltimeReturner("E", Qooltime_E));      // 쿨타임 대기 시작
+                    StartCoroutine(CooltimeReturner("State", 0.1f));        // 정신집중(차징, 멈칫)
+                    NetworkManager.Singleton.Client.Send(message); // qwer일때만 보내자
+                }
                 break;
             case "R":
+                if (isUsable_R && player.IsLocal)
+                {
+                    StartCoroutine(CooltimeReturner("R", Qooltime_R));      // 쿨타임 대기 시작
+                    StartCoroutine(CooltimeReturner("State", 0.3f));        // 정신집중(차징, 멈칫)
+                    NetworkManager.Singleton.Client.Send(message); // qwer일때만 보내자
+                }
                 break;
         }
     }
@@ -68,6 +88,8 @@ public class PlayerSkill : MonoBehaviour
             case "W":
                 break;
             case "E":
+                animManager.SendAttackAnim(key);
+                StartCoroutine(Skill_E(direction));
                 break;
             case "R":
                 break;
@@ -115,5 +137,38 @@ public class PlayerSkill : MonoBehaviour
         }
         Debug.Log(key + "사용가능!");
 
+    }
+    IEnumerator Skill_E(int direction)
+    {
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        E_damageOnOff = true;
+
+        int second = 0;
+        while (second < 5)
+        {
+            rb.MovePosition(new Vector2(transform.position.x + direction, transform.position.y));
+            second++;
+            yield return new WaitForSeconds(0.001f);
+        }
+
+        rb.gravityScale = 3;
+        E_damageOnOff = false;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player" && E_damageOnOff)
+        {
+            if (collision.gameObject != player.gameObject)
+            {
+                if (player.IsLocal)
+                {
+                    collision.GetComponent<Player>().Gethurt(150);
+                    E_damageOnOff = false;
+                }
+            }
+        }
     }
 }
