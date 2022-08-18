@@ -19,4 +19,11 @@ public class PlayerUIManager : MonoBehaviour
         Debug.Log(player.Id + " UI¾÷µ¥ÀÌÆ®µÊ");
         HPbar.fillAmount = Currenthp / Maxhp;
     }
+
+    public void UIReSetting(Player player, Transform Nickname, Transform hpBar)
+    {
+        this.player = player;
+        this.Nickname = Nickname.GetComponent<Text>();
+        this.HPbar = hpBar.GetComponent<Image>();
+    }
 }

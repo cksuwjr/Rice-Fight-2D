@@ -5,6 +5,7 @@ using RiptideNetworking;
 public class AnimManager : MonoBehaviour
 {
     [SerializeField] private Animator anim;
+    [SerializeField] private PlayerAnimSkillEvent playerAnimSkillEvent;
     bool[] AnimationMoveParameter = new bool[3];
     private void Start()
     {
@@ -30,6 +31,7 @@ public class AnimManager : MonoBehaviour
     }
     public void SendAttackAnim(string key)
     {
+        playerAnimSkillEvent.Roff(); // 지속형의 경우 여기서 끊어줘야합니다.
         anim.SetTrigger(key);
     }
 }

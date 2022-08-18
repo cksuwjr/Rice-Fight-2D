@@ -1,37 +1,22 @@
 fileFormatVersion: 2
-guid: b66db4c0a92dacf4281b3cfdd55d5c0a
+guid: e653e04066052e443943fc6a2a611d5f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4257736901874774776
-    second: PlayerShootingSword_0
+      213: -7413094762237916380
+    second: SkillImage_0
   - first:
-      213: 3742541538985559916
-    second: PlayerShootingSword_1
+      213: 6250183627664441254
+    second: SkillImage_1
   - first:
-      213: 3287407295407109257
-    second: PlayerShootingSword_2
+      213: 5174488215103320115
+    second: SkillImage_2
   - first:
-      213: -5540865232324924751
-    second: PlayerShootingSword_3
+      213: 7170918732128019192
+    second: SkillImage_3
   - first:
-      213: -606454073452915103
-    second: PlayerShootingSword_4
-  - first:
-      213: 1868872072536918745
-    second: PlayerShootingSword_5
-  - first:
-      213: 6894854475109035886
-    second: PlayerShootingSword_6
-  - first:
-      213: -1067558265306326959
-    second: PlayerShootingSword_7
-  - first:
-      213: 4370386062424964923
-    second: PlayerShootingSword_8
-  - first:
-      213: -2634738539640080571
-    second: PlayerShootingSword_9
+      213: -2765882922991123418
+    second: SkillImage_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PlayerShootingSword_0
+      name: SkillImage_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f2715f5725861b30800000000000000
-      internalID: 4257736901874774776
+      spriteID: 42b008a07956f1990800000000000000
+      internalID: -7413094762237916380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerShootingSword_1
+      name: SkillImage_1
       rect:
         serializedVersion: 2
         x: 128
@@ -156,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c67c06c63bd20f330800000000000000
-      internalID: 3742541538985559916
+      spriteID: 6afb6ebf4ec1db650800000000000000
+      internalID: 6250183627664441254
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerShootingSword_2
+      name: SkillImage_2
       rect:
         serializedVersion: 2
         x: 256
@@ -177,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 984b4ca84873f9d20800000000000000
-      internalID: 3287407295407109257
+      spriteID: 330bda3bd997fc740800000000000000
+      internalID: 5174488215103320115
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerShootingSword_3
+      name: SkillImage_3
       rect:
         serializedVersion: 2
         x: 384
@@ -198,14 +183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1bae5fe8d64ea13b0800000000000000
-      internalID: -5540865232324924751
+      spriteID: 8f26fadf798348360800000000000000
+      internalID: 7170918732128019192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PlayerShootingSword_4
+      name: SkillImage_4
       rect:
         serializedVersion: 2
         x: 512
@@ -219,113 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 166104bbb317597f0800000000000000
-      internalID: -606454073452915103
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerShootingSword_5
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9da063e8f319fe910800000000000000
-      internalID: 1868872072536918745
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerShootingSword_6
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6fe2e65d917faf50800000000000000
-      internalID: 6894854475109035886
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerShootingSword_7
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1585263f9654f21f0800000000000000
-      internalID: -1067558265306326959
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerShootingSword_8
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b3f782ee7fab6ac30800000000000000
-      internalID: 4370386062424964923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PlayerShootingSword_9
-      rect:
-        serializedVersion: 2
-        x: 1152
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 547b8b4f1478f6bd0800000000000000
-      internalID: -2634738539640080571
+      spriteID: 6248bc4c22c9d99d0800000000000000
+      internalID: -2765882922991123418
       vertices: []
       indices: 
       edges: []

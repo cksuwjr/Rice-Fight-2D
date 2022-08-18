@@ -63,11 +63,21 @@ public class Player : MonoBehaviour
             player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.IsLocal = true;
         }
-        else  // 타인이면
+        else  // 통합위한 수정중
         {
-            player = Instantiate(GameLogic.Singleton.PlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
+            player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.IsLocal = false;
+            player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            Destroy(player.transform.Find("PlayerUI").gameObject);
+            Destroy(player.transform.Find("camProxy").gameObject);
+            GameObject playerUI = Instantiate(GameLogic.Singleton.OtherPlayerUI, player.transform);
+            player.playerUIManager.UIReSetting(player, playerUI.transform.GetChild(0), playerUI.transform.GetChild(2));
         }
+        //else  // 타인이면
+        //{
+        //    player = Instantiate(GameLogic.Singleton.PlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
+        //    player.IsLocal = false;
+        //}
 
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
         player.Id = id;
