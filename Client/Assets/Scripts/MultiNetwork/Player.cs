@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public ushort Id { get; private set; }  // 개인 ID
     public bool IsLocal { get; private set; }  //  내 플레이어인가
     private string username;
+    public string Character;
 
     [SerializeField] private MoveController moveController;
     [SerializeField] private AnimManager animManager;
@@ -55,17 +56,33 @@ public class Player : MonoBehaviour
 
 
 
-    public static void Spawn(ushort id, string username, Vector2 position)   //  플레이어 소환
+    public static void Spawn(ushort id, string username, string chartype, Vector2 position)   //  플레이어 소환
     {
+        GameObject CharacterPrefab;
+        switch (chartype) {
+            case "Lection":
+                CharacterPrefab = GameLogic.Singleton.Lection;
+                break;
+            case "Kara":
+                CharacterPrefab = GameLogic.Singleton.Kara;
+                break;
+            case "Crollo":
+                CharacterPrefab = GameLogic.Singleton.Crollo;
+                break;
+            default:
+                CharacterPrefab = GameLogic.Singleton.LocalPlayerPrefab;
+                break;
+        }
+
+
         Player player;
+        player = Instantiate(CharacterPrefab, position, Quaternion.identity).GetComponent<Player>(); //GameLogic.Singleton.LocalPlayerPrefab
         if (id == NetworkManager.Singleton.Client.Id)  // 본인이면
         {
-            player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.IsLocal = true;
         }
-        else  // 통합위한 수정중
+        else
         {
-            player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.IsLocal = false;
             player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             Destroy(player.transform.Find("PlayerUI").gameObject);
@@ -73,16 +90,11 @@ public class Player : MonoBehaviour
             GameObject playerUI = Instantiate(GameLogic.Singleton.OtherPlayerUI, player.transform);
             player.playerUIManager.UIReSetting(player, playerUI.transform.GetChild(0), playerUI.transform.GetChild(2));
         }
-        //else  // 타인이면
-        //{
-        //    player = Instantiate(GameLogic.Singleton.PlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
-        //    player.IsLocal = false;
-        //}
-
+        
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
         player.Id = id;
         player.username = username;
-
+        player.Character = chartype;
         player.playerUIManager.SetNickname($" {(string.IsNullOrEmpty(username) ? $"Player {id} (Guest)" : username)}");
         list.Add(id, player);
     }
@@ -108,7 +120,7 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void SpawnPlayer(Message message)
     {
-        Spawn(message.GetUShort(), message.GetString(), message.GetVector2());
+        Spawn(message.GetUShort(), message.GetString(),message.GetString() ,message.GetVector2());
     }
 
     [MessageHandler((ushort)ServerToClientId.Move)]

@@ -5,25 +5,30 @@ using UnityEngine;
 public class PlayerAnimSkillEvent : MonoBehaviour
 {
     [SerializeField] Player player;
-    [SerializeField] PlayerSkill playerSkill;
-    [SerializeField] GameObject R_Range;
-    GameObject SpawnedR_Range;
-    public void Q() { }
-    public void W() { }
-    public void E() { }
+    
+    public void Q() {
+        
+    }
+    public void W() {
+        
+    }
+    public void E() {
+        
+    }
     public void R()
     {
-        playerSkill.Skill_R();
+        if(player.Character == "Lection")
+            player.GetComponent<Lection>().Skill_R();
     }
 
-    public void Ron()
+    public void On()
     {
-        if(SpawnedR_Range == null)
-            SpawnedR_Range = Instantiate(R_Range, player.transform);
+        if (player.Character == "Lection")
+            player.GetComponent<Lection>().R_RangeOn();
     }
-    public void Roff()
+    public void Off()
     {
-        if(SpawnedR_Range != null)
-            Destroy(SpawnedR_Range);
+        if (player.Character == "Lection")
+            player.GetComponent<Lection>().R_RangeOff();
     }
 }

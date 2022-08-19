@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private InputField IpField;
     [SerializeField] private InputField PortField;
     [SerializeField] private InputField usernameField;
+    [SerializeField] private Dropdown CharacterSelect;
 
     private void Awake()
     {
@@ -51,10 +52,11 @@ public class UIManager : MonoBehaviour
         usernameField.interactable = true;
         connectUI.SetActive(true);
     }
-    public void SendName()
+    public void SendInformation()
     {
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.name);
         message.AddString(usernameField.text);
+        message.AddString(CharacterSelect.options[CharacterSelect.value].text);
         NetworkManager.Singleton.Client.Send(message);
     }
 }

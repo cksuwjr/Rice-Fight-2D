@@ -75,16 +75,20 @@ public class NetworkManager : MonoBehaviour
     }
     public void Connect(string ip, string port)
     {
-        if(ip != "")
+        if (ip != "")
             this.ip = ip.ToString();
-        if(port != "")
+        else
+            this.ip = "127.0.0.1";
+        if (port != "")
             this.port = ushort.Parse(port);
+        else
+            this.port = 7777;
         Client.Connect($"{this.ip}:{this.port}");
     }
 
     private void DidConnect(object sender, EventArgs e)
     {
-        UIManager.Singleton.SendName();
+        UIManager.Singleton.SendInformation();
     }
 
     private void FailedToConnect(object sender, EventArgs e)

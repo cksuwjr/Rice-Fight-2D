@@ -29,6 +29,14 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject otherPlayerUI;
 
+    public GameObject Lection => lection;
+    public GameObject Kara => kara;
+    public GameObject Crollo => crollo;
+    [Header("Characters")]
+    [SerializeField] private GameObject lection;
+    [SerializeField] private GameObject kara;
+    [SerializeField] private GameObject crollo;
+
     private void Awake()
     {
         Singleton = this;
