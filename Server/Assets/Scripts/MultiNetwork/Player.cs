@@ -9,6 +9,15 @@ public class Player : MonoBehaviour
     public ushort Id { get; private set; } // 고유 ID
     public string Username { get; private set; } //  유저 이름
 
+    public enum CharType
+    {
+        Lection,
+        Kara,
+        Crollo,
+    }
+
+    public CharType Character;
+
     public PlayerKeyinput playerkeyinput;
 
     [SerializeField] private Status status;
@@ -17,7 +26,7 @@ public class Player : MonoBehaviour
     {
         list.Remove(Id);
     }
-    public static void Spawn(ushort id, string username) // 소환(id, 이름)
+    public static void Spawn(ushort id, string username, string charactertype) // 소환(id, 이름)
     {
         foreach(Player otherPlayer in list.Values)      // 현재 모든 플레이어들에게 SendSpawned(id) 호출 (새로운 플레이어 등장!)
             otherPlayer.SendSpawned(id);
@@ -27,6 +36,18 @@ public class Player : MonoBehaviour
         player.name = $"Player {id} ({(string.IsNullOrEmpty(username) ? "Guest" : username)})";
         player.Id = id;
         player.Username = username;
+        switch (charactertype)
+        {
+            case "Lection":
+                player.Character = CharType.Lection;
+                break;
+            case "Kara":
+                player.Character = CharType.Kara;
+                break;
+            case "Crollo":
+                player.Character = CharType.Crollo;
+                break;
+        }
 
         player.SendSpawned(); // 새로 생성된 플레이어에서 모든 플레이어들에게 SendSpawned()호출
         list.Add(id, player);
@@ -60,6 +81,7 @@ public class Player : MonoBehaviour
     {
         message.AddUShort(Id);
         message.AddString(Username);
+        message.AddString(Character.ToString());
         message.AddVector2(transform.position);
         return message;
     }
@@ -77,7 +99,7 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ClientToServerId.name)]
     private static void Name(ushort fromClientId, Message message)
     {
-        Spawn(fromClientId, message.GetString());
+        Spawn(fromClientId, message.GetString(), message.GetString());
     }
     [MessageHandler((ushort)ClientToServerId.input)]
     private static void Input(ushort fromClientId, Message message)
