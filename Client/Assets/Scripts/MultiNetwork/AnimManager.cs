@@ -23,6 +23,10 @@ public class AnimManager : MonoBehaviour
         anim.SetBool("isJump", isjump);
         AnimationMoveParameter[2] = isjump;
     }
+    public void AnimSetInt(string name, int n)
+    {
+        anim.SetInteger(name, n);
+    }
     public void SendMoveAnim()
     {
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.MyAnim);

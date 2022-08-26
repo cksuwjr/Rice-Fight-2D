@@ -38,12 +38,14 @@ public class PlayerKeyinput : MonoBehaviour
             finaldirection = direction;
 
         if (inputs[4])
-            SendSkillReady("Q");
+            SendSkillReady("A");
         if (inputs[5])
-            SendSkillReady("W");
+            SendSkillReady("Q");
         if (inputs[6])
-            SendSkillReady("E");
+            SendSkillReady("W");
         if (inputs[7])
+            SendSkillReady("E");
+        if (inputs[8])
             SendSkillReady("R");
     }
     

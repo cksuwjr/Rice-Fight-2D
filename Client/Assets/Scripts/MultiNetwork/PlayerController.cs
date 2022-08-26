@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        inputs = new bool[8];
+        inputs = new bool[9];
     }
 
     private void Update()
@@ -26,14 +26,16 @@ public class PlayerController : MonoBehaviour
             inputs[3] = true;
 
         // ============ ½ºÅ³Å° ==========
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.A))
             inputs[4] = true;
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.Q))
             inputs[5] = true;
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.W))
             inputs[6] = true;
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.E))
             inputs[7] = true;
+        if (Input.GetKey(KeyCode.R))
+            inputs[8] = true;
     }
     private void FixedUpdate()
     {

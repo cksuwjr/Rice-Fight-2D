@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
     private static void Input(ushort fromClientId, Message message)
     {
         if (list.TryGetValue(fromClientId, out Player player))
-            player.playerkeyinput.SetInput(message.GetBools(8));
+            player.playerkeyinput.SetInput(message.GetBools(9));
     }
 
     [MessageHandler((ushort)ClientToServerId.MyPose)]

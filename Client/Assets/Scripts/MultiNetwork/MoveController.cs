@@ -8,6 +8,7 @@ public class MoveController : MonoBehaviour
     {
         Nothing,
         Charging,
+        AttackMoving,
 
     }
 
@@ -36,7 +37,7 @@ public class MoveController : MonoBehaviour
     {
         if (player.IsLocal && state == State.Charging)
             rb.velocity = new Vector2(0, rb.velocity.y);
-        if (player.IsLocal && state == State.Nothing)
+        if (player.IsLocal && (state == State.Nothing || state == State.AttackMoving))
         {
             Vector2 targetVelocity = new Vector2(direction * MoveSpeed, rb.velocity.y);
             rb.velocity = Vector2.SmoothDamp(rb.velocity, targetVelocity, ref velocity, Smooth);

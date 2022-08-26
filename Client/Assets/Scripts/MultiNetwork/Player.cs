@@ -40,8 +40,11 @@ public class Player : MonoBehaviour
             case "Nothing":
                 moveController.state = MoveController.State.Nothing;
                 break;
-            case "Charging":
+            case "Charging": // AttackCantMove
                 moveController.state = MoveController.State.Charging;
+                break;
+            case "AttackMoving": // AttackCanMove
+                moveController.state = MoveController.State.AttackMoving;
                 break;
         }
     }

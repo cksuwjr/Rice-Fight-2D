@@ -17,9 +17,14 @@ public class Lection : MonoBehaviour
 
     bool E_damageOnOff = false;
 
+    public void A(int direction)
+    {
+        StartCoroutine(State("Charging",0.3f));
+
+    }
     public void Q(int direction)
     {
-        StartCoroutine(State(0.3f));    // Á¤½ÅÁýÁß(Â÷Â¡, ¸ØÄ©)
+        StartCoroutine(State("Charging",0.3f));    // Á¤½ÅÁýÁß(Â÷Â¡, ¸ØÄ©)
         playerSkill.CanUseNow("R", true); // RÃÊ±âÈ­
         GameObject Spawned;
         if (Projectile_Q != null)
@@ -30,22 +35,22 @@ public class Lection : MonoBehaviour
     }
     public void W(int direction)
     {
-        StartCoroutine(State(0.3f));
+        StartCoroutine(State("Charging",0.3f));
 
     }
     public void E(int direction)
     {
-        StartCoroutine(State(0.1f));
+        StartCoroutine(State("Charging",0.1f));
         playerSkill.CanUseNow("R", true); // RÃÊ±âÈ­
         StartCoroutine(Skill_E(direction));
     }
     public void R(int direction)
     {
-        StartCoroutine(State(0.3f));
+        StartCoroutine(State("Charging",0.3f));
         playerSkill.CanUseNow("R", false);
 
     }
-    IEnumerator State(float time)
+    IEnumerator State(string what, float time)
     {
         player.SetState("Charging");
         yield return new WaitForSeconds(time);

@@ -2073,7 +2073,7 @@ GameObject:
   - component: {fileID: 7642632047027764972}
   - component: {fileID: 6473934202970968721}
   - component: {fileID: 8793442314130742191}
-  - component: {fileID: 2705541485927276077}
+  - component: {fileID: 273619664089700646}
   - component: {fileID: 6031009306601114491}
   - component: {fileID: 2652814690447803729}
   m_Layer: 6
@@ -2196,17 +2196,19 @@ MonoBehaviour:
   player: {fileID: 6768072717642975016}
   animManager: {fileID: 2938458817866100843}
   moveController: {fileID: 7642632047027764972}
-  lection: {fileID: 2705541485927276077}
+  lection: {fileID: 0}
+  kara: {fileID: 273619664089700646}
   Mybody: {fileID: 1974483700872494357}
   Q_UI: {fileID: 408416740}
   W_UI: {fileID: 2035634606}
   E_UI: {fileID: 1471071482}
   R_UI: {fileID: 1715890879}
+  Cooltime_A: 0.8
   Cooltime_Q: 0.8
   Cooltime_W: 0.8
   Cooltime_E: 0.8
   Cooltime_R: 0.8
---- !u!114 &2705541485927276077
+--- !u!114 &273619664089700646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2215,14 +2217,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7615302597602740842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2fb392255fc05449d7965303e4e0f6, type: 3}
+  m_Script: {fileID: 11500000, guid: e094053df7af58247bb525a06e526543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6768072717642975016}
   playerSkill: {fileID: 8793442314130742191}
-  Projectile_Q: {fileID: 3457567047189637719, guid: 2a3a87293979eb04a8af075d4131b3ad, type: 3}
-  Projectile_R: {fileID: 1922057716236510596, guid: 294d1648352063a429aebaecb11cef06, type: 3}
-  R_Range: {fileID: 862964926529675905, guid: 121caa743ec19d14db35f0ab1a76c7e3, type: 3}
 --- !u!50 &6031009306601114491
 Rigidbody2D:
   serializedVersion: 4
