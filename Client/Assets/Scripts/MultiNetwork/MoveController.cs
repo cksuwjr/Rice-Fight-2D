@@ -47,7 +47,7 @@ public class MoveController : MonoBehaviour
             bool isJump;
 
             // 점프 검사
-            if (Physics2D.OverlapCircle(GroundCheck.position, 0.05f, MyGround))
+            if (Physics2D.OverlapBox(GroundCheck.position, new Vector2(0.7f, 0.2f), 0, MyGround))//Physics2D.OverlapCircle(GroundCheck.position, 0.05f, MyGround)
                 isJump = false;
             else
                 isJump = true;
